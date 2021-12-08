@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <link rel="stylesheet" href="styles.css">
+	<button class='btn' id="getPosts">Get Data From API</button>
+	<!--<p id="output"></p>-->
+    <table id="output" class="table">
+       
+
+    </table>
+	<script>
+		document.getElementById('getPosts').addEventListener('click', getPosts);
+		function getPosts() {
+			fetch('https://www.cheapshark.com/api/1.0/deals')
+			.then((response) => response.json())
+			.then((data) => {
+               // let result = data.results;
+				let output = '<h2>Game Data</h2><tr><th>Cover</th><th>Title</th><th>Price</th><th>Rating</th></tr>';
+                let iteration = 0;
+				console.log(data);
+				data.forEach((post) => {
+					output += `
+						<tr>
+                            <td><img src='${post.thumb}'></td>
+							<td>${post.title}</td>
+                            <td>${post.normalPrice}</td>
+                            <td>${post.dealRating}</td>
+                            
+						</tr>
+					`;
+                   
+				})
+				document.getElementById('output').innerHTML = output;
+			})
+			.catch((err) => console.log(err));
+		}
+	</script>
+</body>
+</html>
